@@ -1,0 +1,40 @@
+import qualified Data.List as List
+import qualified System.Random as Rand
+--21
+insertAt xs ys x = 
+	let (zs,ks) = List.genericSplitAt x ys
+	in concat (zs:[xs]:ks:[])
+
+--22
+range x y = [x..y]
+
+--23
+rnd_select xs n = do
+    gen <- Rand.getStdGen
+    return $ List.genericTake n [ xs !! x | x <- Rand.randomRs (0, (length xs) - 1) gen]
+
+--24
+diff_select x y = do
+	gen <- Rand.getStdGen
+	return (List.genericTake x $ Rand.randomRs (1, y) gen)
+
+--25
+rnd_permu xs = do
+	index <- Rand.randomRIO (0,(length xs)-1)
+	return ((List.permutations xs)!! index)
+
+--26
+combinations 0 xs = [[]]
+combinations x xs = [y:ys | (y:xs') <- List.tails xs, ys <- combinations (x-1) xs']
+
+--27
+
+--28
+lsort [] = []
+lsort (x:xss) = ls ++ [x] ++ rs
+	where ls = lsort [y| y<-xss, (length y) <= (length x)]
+	      rs = lsort [y| y<-xss, (length y) > (length x)]
+
+lfsort lists = concat groups
+    where groups = lsort $ groupBy equalLength $ lsort lists
+          equalLength xs ys = length xs == length ys

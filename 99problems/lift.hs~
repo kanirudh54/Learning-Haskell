@@ -1,0 +1,5 @@
+import Control.Monad
+
+plus2 x = (x+2) --Pure Function
+
+plus2list xs = do (liftM plus2 xs)
