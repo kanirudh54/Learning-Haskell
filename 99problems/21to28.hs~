@@ -33,9 +33,11 @@ combinations x xs = [y:ys | (y:xs') <- List.tails xs, ys <- combinations (x-1) x
 --28
 lsort [] = []
 lsort (x:xss) = ls ++ [x] ++ rs
-	where ls = lsort [y | y<-xss, (length y) <= (length x)]
-	      rs = lsort [y | y<-xss, (length y) > (length x)]
+	where ls = lsort [y| y<-xss, (length y) <= (length x)]
+	      rs = lsort [y| y<-xss, (length y) > (length x)]
 
 lfsort lists = concat groups
     where groups = lsort $ List.groupBy equalLength $ lsort lists
           equalLength xs ys = length xs == length ys
+
+combination x xs = replicateM x xs --alternative to 26

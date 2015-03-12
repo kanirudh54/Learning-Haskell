@@ -8,8 +8,8 @@ data Friendly a = Edge [(a, a)] deriving (Show, Eq)
 graphToAdj :: (Eq a) => Graph a -> Adjacency a
 graphToAdj (Graph [] _)	     = Adj []
 graphToAdj (Graph (x:xs) ys) = Adj ((x, ys >>= f) : zs)
-   where
-      f (a, b)
+   where 
+      f (a, b) 
          | a == x = [b]
          | b == x = [a]
          | otherwise = []

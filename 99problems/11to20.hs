@@ -27,36 +27,36 @@ dupli xs = concatMap (replicate 2) xs
 --15
 repli [] x = []
 repli xs 0 = []
-repli xs x = concat [y| z<-xs, let y = replicate x z]
+repli xs x = concat [y | z<-xs, let y = replicate x z]
 
 --16
 dropEvery [] x = []
 dropEvery xs 0 = xs
-dropEvery xs x = [z| z<-xs, fmap (`mod` 3) (z `List.elemIndex` xs) /= Just 2 ]
+dropEvery xs x = [z | z<-xs, fmap (`mod` 3) (z `List.elemIndex` xs) /= Just 2 ]
 
 --17
 split::[Char]->Int->[[Char]]
 split xs x =
 	let ys = [y | y<-xs, (y `List.elemIndex` xs) < Just x]
-	    zs = [l| l<-xs, (l `List.elemIndex` xs) > Just (x-1)]
+	    zs = [l | l<-xs, (l `List.elemIndex` xs) > Just (x-1)]
 	in ys:zs:[]
 
 --18
 
 split' xs x =
 	let ys = [y | y<-xs, (y `List.elemIndex` xs) < Just (x-1)]
-	    zs = [l| l<-xs, (l `List.elemIndex` xs) > Just (x-2)]
+	    zs = [l | l<-xs, (l `List.elemIndex` xs) > Just (x-2)]
 	in ys:zs:[]
 slice xs x y = (split' ((split' xs x)!!1) y)!!0
 
 --19
 rotate xs x =
 	let ys = [y | y<-xs, (y `List.elemIndex` xs) < Just x]
-	    zs = [l| l<-xs, (l `List.elemIndex` xs) > Just (x-1)]
+	    zs = [l | l<-xs, (l `List.elemIndex` xs) > Just (x-1)]
 	in concat (zs:ys:[])
 
 --20
 removeAt x xs = 
-	let z = [y| y<-xs, y`List.elemIndex` xs == Just (x-1)]
-	    w = [y| y<-xs, y`List.elemIndex` xs /= Just (x-1)]
+	let z = [y | y<-xs, y`List.elemIndex` xs == Just (x-1)]
+	    w = [y | y<-xs, y`List.elemIndex` xs /= Just (x-1)]
 	in z:w:[]

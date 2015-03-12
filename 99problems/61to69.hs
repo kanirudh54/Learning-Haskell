@@ -1,7 +1,7 @@
 data Tree a = Empty | Branch a (Tree a) (Tree a) deriving (Show, Eq)
 
-tree4 = Branch 1 (Branch 2 Empty (Branch 4 Empty Empty)) (Branch 2 Empty Empty)
-
+tree4 = Branch 1 (Branch 2 Empty (Branch 4 Empty Empty))
+                 (Branch 2 Empty Empty)
 --61
 countLeaves Empty                  = 0
 countLeaves (Branch _ Empty Empty) = 1
@@ -28,3 +28,4 @@ atLevel (Branch x l r) y = (atLevel l (y-1)) ++ (atLevel r (y-1))
 
 --63
 
+--64

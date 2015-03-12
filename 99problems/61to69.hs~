@@ -1,7 +1,5 @@
 data Tree a = Empty | Branch a (Tree a) (Tree a) deriving (Show, Eq)
 
-tree4 = Branch 1 (Branch 2 Empty (Branch 4 Empty Empty)) (Branch 2 Empty Empty)
-
 --61
 countLeaves Empty                  = 0
 countLeaves (Branch _ Empty Empty) = 1
@@ -25,4 +23,18 @@ inter t@(Branch x l r) = x:(inter l ++ inter r)
 atLevel Empty x = []
 atLevel (Branch x l r) 1 = [x]
 atLevel (Branch x l r) y = (atLevel l (y-1)) ++ (atLevel r (y-1))
+
+--63
+
+--64
+type Pos = (Int, Int)
+ 
+layout :: Tree a -> Tree (a, Pos)
+layout t = fst (layoutAux 1 1 t)
+  where layoutAux x y Empty = (Empty, x)
+        layoutAux x y (Branch a l r) = (Branch (a, (x',y)) l' r', x'')
+          where (l', x')  = layoutAux x (y+1) l
+                (r', x'') = layoutAux (x'+1) (y+1) r
+
+
 
