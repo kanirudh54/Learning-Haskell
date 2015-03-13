@@ -1,19 +1,13 @@
 --author : Sai Anirudh Kondaveeti
 import Data.List as L
 -- ld is the list of domains for each variable -- (label,domain)
+--Author : Sai Anirudh
+--Guided by Dr. Gagnon
 
 ld = [('a',[1,2,3,4]),('b',[1,2,3,4]),('c',[1,2,3,4]),('d',[1,3,4])]
 -- condi is the condition
 condi = [('a','/','b'),('b','/','c'),('b','<','c'),('b','<','d'),('a','>','c'),('c','<','d')]
-{--!
-ForwardCheck (ns,es) ld cond = ForwardCheck' (ns,es) sld cond
-	where sld = sorth ld
---mods modified list of domains
-ForwardCheck' (ns,es) [(x,[])] cond = []
-ForwardCheck' (ns,es) ((var,dom):xs) cond = [(var, y):((ForwardCheck (ns,es) mods cond)++(ForwardCheck (ns,es) mods cond)) | y <- dom ,let mods = helper var y xs cond]
 
-helper x y xs cond = [z | z <- xs,  (x==y) && cond]  ---- How to modify the domain ??
---}
 
 --checks whether the given label and values satisfy the condition
 check::(Int,Int)->(Char,Char) -> [(Char,Char,Char)] -> Bool
