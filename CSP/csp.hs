@@ -1,8 +1,8 @@
 --author : Sai Anirudh Kondaveeti
+--Guided by Dr. Gagnon
 import Data.List as L
 -- ld is the list of domains for each variable -- (label,domain)
---Author : Sai Anirudh
---Guided by Dr. Gagnon
+
 
 ld = [('a',[1,2,3,4]),('b',[1,2,3,4]),('c',[1,2,3,4]),('d',[1,3,4])]
 -- condi is the condition
