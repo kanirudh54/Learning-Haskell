@@ -16,6 +16,13 @@ check (value1,value2) (label1,label2) xs =
 	    bool = if (label1 == x) then (verify (value1,y,value2)) else (verify (value2,y,value1))
 	in bool
 
+--Gives the exact condition in with those labels are present
+chec::(Int,Int) -> (Char,Char) -> [(Char,Char,Char)] -> [(Char,Char,Char)]
+chec (value1,value2) (label1,label2) [] = []
+chec (value1,value2) (label1,label2) ((x,y,z):xs) =
+	let  cond = if ((label1 == x && label2 == z) || (label1 == z && label2 == x)) then [(x,y,z)] else chec (value1,value2) (label1,label2) xs
+	in cond
+
 --verifies the (value,binaryfunction,value)
 verify::(Int,Char,Int) -> Bool
 verify (x,y,z) = case y of '/' -> (x /= z)
@@ -23,12 +30,6 @@ verify (x,y,z) = case y of '/' -> (x /= z)
                            '>' -> (x > z)
                            '=' -> (x == z)
 
---Gives the exact condition in with those labels are present
-chec::(Int,Int) -> (Char,Char) -> [(Char,Char,Char)] -> [(Char,Char,Char)]
-chec (value1,value2) (label1,label2) [] = []
-chec (value1,value2) (label1,label2) ((x,y,z):xs) =
-	let  cond = if ((label1 == x && label2 == z) || (label1 == z && label2 == x)) then [(x,y,z)] else chec (value1,value2) (label1,label2) xs
-	in cond
 
 --MRV--
 sorth::[(Char, [Int])] -> [(Char, [Int])]
