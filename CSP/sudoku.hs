@@ -1,13 +1,19 @@
 --author : Sai Anirudh Kondaveeti
---Guided by Dr. Gagnon
 import Data.List as L
 -- ld is the list of domains for each variable -- (label,domain)
-
 
 ld = [('a',[1,2,3,4]),('b',[1,2,3,4]),('c',[1,2,3,4]),('d',[1,3,4])]
 -- condi is the condition
 condi = [('a','/','b'),('b','/','c'),('b','<','c'),('b','<','d'),('a','>','c'),('c','<','d')]
+{--!
+ForwardCheck (ns,es) ld cond = ForwardCheck' (ns,es) sld cond
+	where sld = sorth ld
+--mods modified list of domains
+ForwardCheck' (ns,es) [(x,[])] cond = []
+ForwardCheck' (ns,es) ((var,dom):xs) cond = [(var, y):((ForwardCheck (ns,es) mods cond)++(ForwardCheck (ns,es) mods cond)) | y <- dom ,let mods = helper var y xs cond]
 
+helper x y xs cond = [z | z <- xs,  (x==y) && cond]  ---- How to modify the domain ??
+--}
 
 --checks whether the given label and values satisfy the condition
 check::(Int,Int)->(Char,Char) -> [(Char,Char,Char)] -> Bool
@@ -16,13 +22,6 @@ check (value1,value2) (label1,label2) xs =
 	    bool = if (label1 == x) then (verify (value1,y,value2)) else (verify (value2,y,value1))
 	in bool
 
---Gives the exact condition in with those labels are present
-chec::(Int,Int) -> (Char,Char) -> [(Char,Char,Char)] -> [(Char,Char,Char)]
-chec (value1,value2) (label1,label2) [] = []
-chec (value1,value2) (label1,label2) ((x,y,z):xs) =
-	let  cond = if ((label1 == x && label2 == z) || (label1 == z && label2 == x)) then [(x,y,z)] else chec (value1,value2) (label1,label2) xs
-	in cond
-
 --verifies the (value,binaryfunction,value)
 verify::(Int,Char,Int) -> Bool
 verify (x,y,z) = case y of '/' -> (x /= z)
@@ -30,6 +29,12 @@ verify (x,y,z) = case y of '/' -> (x /= z)
                            '>' -> (x > z)
                            '=' -> (x == z)
 
+--Gives the exact condition in with those labels are present
+chec::(Int,Int) -> (Char,Char) -> [(Char,Char,Char)] -> [(Char,Char,Char)]
+chec (value1,value2) (label1,label2) [] = []
+chec (value1,value2) (label1,label2) ((x,y,z):xs) =
+	let  cond = if ((label1 == x && label2 == z) || (label1 == z && label2 == x)) then [(x,y,z)] else chec (value1,value2) (label1,label2) xs
+	in cond
 
 --MRV--
 sorth::[(Char, [Int])] -> [(Char, [Int])]
